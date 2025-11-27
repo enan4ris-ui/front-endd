@@ -8,7 +8,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { MailIcon } from "../app/_icons/MailIcon";
+// import { MailIcon } from "../app/_icons/MailIcon";
+import Image from "next/image";
 const Home = () => {
   const [step, setStep] = useState(1);
   const router = useRouter();
@@ -69,7 +70,6 @@ const Home = () => {
       "Password not match"
     ),
   });
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -82,11 +82,9 @@ const Home = () => {
     },
   });
   return (
-    <div className="w-screen h-screen justify-center items-center flex flex-col gap-6 ">
-      {/* <div className="w-[856px] h-[904px] relative">
-        <MailIcon className=" object-cover flex flex-end rounded-2xl" />
-      </div> */}
-      <SignUp />
+    <div className=" h-screen flex gap-90 relative">
+      {/* <div> */}
+      <SignUp className="w-[400px] h-[372px] flex align-center justify-start align-start" />
       {step === 1 && <StepOne increaseStep={increaseStep} formik={formik} />}
       {step === 2 && (
         <Step2
@@ -98,6 +96,10 @@ const Home = () => {
       {/* {step === 3 && (
         <Step3 increaseStep={increaseStep} reduceStep={reduceStep} />
       )} */}
+      {/* </div> */}
+      <div className=" flex w-[856px] h-[904px] relative">
+        <Image src="/delivery.png" alt="aa" fill />{" "}
+      </div>
     </div>
   );
 };

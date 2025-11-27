@@ -11,7 +11,7 @@ export default function Step3() {
   };
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div className="w-[1440px] h-[944px] p-5 flex gap-12 pl-20 justify-between items-center">
+      <div className="w-[1440px] h-[944px] p-5 flex gap-12 pl-20 items-center">
         <div className="w-100 h-93 flex flex-col gap-6">
           <div className="w-9 h-9 flex justify-center items-center rounded-[10px] border border-[#E4E4E7]">
             <ChevronLeft />

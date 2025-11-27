@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ChevronLeft } from "@/app/_icons/ChevronLeft";
-import { MailIcon } from "../_icons/MailIcon";
+// import { MailIcon } from "../_icons/MailIcon";
 import { Button } from "@/components/ui/button";
 
 export default function StepOne({ increaseStep, formik }) {
@@ -17,14 +17,14 @@ export default function StepOne({ increaseStep, formik }) {
   document.body.appendChild(img);
 
   return (
-    <div className="flex h-full w-screen overflow-hidden flex-col">
-      <div className="flex flex-col items-center justify-center w-1/2">
+    <div className="flex h-full overflow-hidden flex-col">
+      <div className="flex flex-col w-1/2">
         <div className="w-full max-w-[416px]">
           <div className="mb-6">
             <ChevronLeft />
           </div>
 
-          <div className="mb-6 flex flex-col ">
+          <div className="w-[416px] mb-6 flex flex-col ">
             <h1 className="font-semibold text-2xl">Create your account</h1>
             <p className="text-[#71717A]">
               Sign up to explore your favorite dishes.
@@ -32,10 +32,10 @@ export default function StepOne({ increaseStep, formik }) {
           </div>
 
           <div className="relative mb-2 flex flex-col">
-            <MailIcon
+            {/* <MailIcon
               className={`absolute hidden left-3 top-1/2 -translate-y-1/2 h-4 w-4
               ${!validEmail && touched ? "text-red-300" : "text-[#71717A]"}`}
-            />
+            /> */}
 
             <Input
               type="email"
@@ -73,19 +73,19 @@ export default function StepOne({ increaseStep, formik }) {
             Let&apos;s Go
           </Button>
         </div>
-        <div className="flex gap-3 text-4 justify-center items-center flex-row">
+        <div className="flex w-[400px] gap-3 text-4 justify-center items-center flex-row">
           <p className="text-[#71717A]">Already have an account?</p>
           <span className="text-[#2563EB]">Log in</span>
         </div>
       </div>
-      <div className="w-[856px] h-[904px] relative">
+      {/* <div className="w-[856px] h-[904px] relative">
         <MailIcon
           //   src="/mailIcon.png"
           fill
           //   alt="the picture"
-          className="object-cover rounded-2xl"
+          //   className="object-cover rounded-2xl"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

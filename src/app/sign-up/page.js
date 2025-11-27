@@ -18,7 +18,7 @@ export const SignUp = () => {
   };
 
   return (
-    <div className="flex w-screen justify-center align-center">
+    <div className="flex ">
       {/* <div className="w-[416px] h-72 justify-center pl-[70px] flex-col p-6">
         <ChevronLeft className="flex flex-start" />
         <div className="w-[416px] h-[60px] gap-1">

@@ -5,7 +5,7 @@ import { ChevronLeft } from "@/app/_icons/ChevronLeft";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useRouter } from "next/navigation";
-import { MailIcon } from "../_icons/MailIcon";
+// import { MailIcon } from "../_icons/MailIcon";
 import { Button } from "@/components/ui/button";
 
 export default function Step2({
@@ -18,6 +18,7 @@ export default function Step2({
   const [show, setShow] = useState(false);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
   // const [touched, setTouched] = useState(false);
   const hasLetters = /[a-zA-Z]/.test(password);
   const hasNumbers = /[0-9]/.test(password);
@@ -39,6 +40,7 @@ export default function Step2({
   const error = touched && !isValid;
 
   console.log("values", values);
+  // let img = document.createElement('img');
 
   return (
     <div className="flex h-screen w-screen justify-center align-center overflow-hidden">
