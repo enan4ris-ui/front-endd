@@ -1,14 +1,63 @@
 "use client";
+import { useState } from "react";
 import Image from "next/image";
 import { ChevronLeft } from "@/app/_icons/ChevronLeft";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
-export default function LoginPage() {
+export default function LoginPage1() {
+  const [step, setStep] = useState(1);
   const router = useRouter();
-  const handleButtonClick = () => {
-    router.push("/signup");
+  const [apiError, setApiError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("Invalid email. Use a format like example@gmail.com. ")
+      .required("Required"),
+    password: Yup.string().min(6, "min 6").required("Required"),
+  });
+
+  const createUser = async (email, password) => {
+    try {
+      setLoading(true);
+      await axios.post("https://localhost:999/authentication/login", {
+        email: email,
+        password: password,
+      });
+      router.push("/signup");
+    } catch (err) {
+      setApiError(err.response.data);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  function increaseStep() {
+    setStep((prev) => prev + 1);
+  }
+  function reduceStep() {
+    setStep((prev) => prev - 1);
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      const { email, password } = values;
+      await logUser(email, password);
+    },
+  });
+
+  const handleClick = () => {
+    router.push("/sign-up");
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-[1440px] h-[944px] p-5 flex gap-12 pl-20 items-center">
@@ -30,20 +79,23 @@ export default function LoginPage() {
             </div>
           </div>
           <div className="w-104 h-9 bg-[#18181B]  rounded-[6px] flex justify-center items-center">
-            <p className="text-[#FAFAFA] text-[14px] font-medium">
+            <p
+              className="text-[#FAFAFA] text-[14px] font-medium"
+              onClick={<resetPassword />}
+            >
               Let&apos;s Go
             </p>
           </div>
           <div className="flex gap-3 text-4 justify-center items-center">
             <p className="text-[#71717A]">Don’t have an account?</p>
-            <button className="text-[#2563EB]" onClick={handleButtonClick}>
+            <button className="text-[#2563EB]" onClick={handleClick}>
               Sign up{" "}
             </button>
           </div>
         </div>
         <div className="w-[856px] h-[904px] relative">
           <Image
-            src="/login.png"
+            src="/delivery.png"
             fill
             alt="the picture"
             className="object-cover rounded-2xl"

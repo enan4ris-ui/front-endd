@@ -1,32 +1,32 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronLeft } from "@/app/_icons/ChevronLeft";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+import { ChevronLeft } from "@/app/_icons/ChevronLeft";
 import { useRouter } from "next/navigation";
-// import { MailIcon } from "../_icons/MailIcon";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
-export default function Step2({
-  increaseStep,
-  reduceStep,
-  formik,
-  // errors,
-  // touched,
-}) {
+export default function Step2({ next, back, formik }) {
+  const {
+    values,
+    handleChange,
+    handleBlur,
+    errors,
+    touched,
+    handleSubmit,
+    isSubmitting,
+  } = formik;
+
   const [show, setShow] = useState(false);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
-  // const [touched, setTouched] = useState(false);
   const hasLetters = /[a-zA-Z]/.test(password);
   const hasNumbers = /[0-9]/.test(password);
   const hasSpecial = /[^a-zA-Z0-9]/.test(password);
 
   const router = useRouter();
-
-  const { values, handleChange, handleBlur, errors, touched } = formik;
 
   let strength = "weak";
   if (password.length >= 8 && hasLetters && hasNumbers && hasSpecial) {
@@ -40,7 +40,7 @@ export default function Step2({
   const error = touched && !isValid;
 
   console.log("values", values);
-  // let img = document.createElement('img');
+  let img = document.createElement("img");
 
   return (
     <div className="flex h-screen w-screen justify-center align-center overflow-hidden">
@@ -105,36 +105,24 @@ export default function Step2({
             <p className="text-[14px] text-[#71717A]">Show password</p>
           </div>
         </div>
-        <div className="w-104 h-9 bg-[#18181B]  rounded-[6px] flex justify-center items-center">
-          <p className="text-[#FAFAFA] text-[14px] font-medium">
-            Let&apos;s Go
-          </p>
-        </div>
-        <div className="flex gap-3 text-4 justify-center items-center">
-          <p className="text-[#71717A]">Already have an account?</p>
-          <button disable="true" className="text-[#2563EB]">
-            Log in{" "}
-          </button>
-          <Button
-            disable={errors.password || !values.password}
-            className={`w-[416px] h-9 mb-6 cursor-pointer
+        <Button
+          disable={isSubmitting}
+          onClick={handleSubmit}
+          className={`w-[416px] h-9 mb-6 cursor-pointer
             ${
               confirmPassword
                 ? "bg-[#18181B] text-white"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
             }`}
-          >
-            Let&apos;s Go
-          </Button>
+        >
+          {isSubmitting ? "loading" : "Lets Go"}
+        </Button>
+        <div className="flex flex-row gap-3 text-4 justify-center items-center">
+          <p className="text-[#71717A]">Already have an account?</p>
+          <button disable="true" className="text-[#2563EB]">
+            Log in{" "}
+          </button>
         </div>
-      </div>
-      <div className="w-[856px] h-[904px] relative">
-        <MailIcon
-          // src="/mailIcon.png"
-          // fill
-          // alt="the picture"
-          className="object-cover rounded-2xl"
-        />
       </div>
     </div>
   );

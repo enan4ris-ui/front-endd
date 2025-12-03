@@ -1,46 +1,37 @@
 "use client";
 import { useState } from "react";
-import { useFormik } from "formik";
-import StepOne from "./stepOne";
-import Step2 from "./step2";
-import * as Yup from "yup";
-import { useRouter } from "next/navigation";
-import axios from "axios";
 import Image from "next/image";
+import LoginPage1 from "../login/page";
+import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import SignUp from "../sign-up/page";
+import resetPassword from "./resetPassword";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
-const SignUp = () => {
+const LoginOfficialPage = () => {
   const [step, setStep] = useState(1);
+  const router = useRouter();
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const router = useRouter();
-
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Please enter a valid email address (m@example.com)")
+      .email("Invalid email. Use a format like example@email.com. ")
       .required("Required"),
     password: Yup.string()
-      .min(8, "it must above 8 characters")
-
-      .matches(/[a-zA-Z]/, "it must contain letters")
-
-      .matches(/[0-9]/, "it must contain numbers")
-
-      .matches(/[^a-zA-Z0-9]/, "it must contain symbols")
+      .password("Incorrect password. Please try again.")
       .required("Required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Please confirm your password"),
   });
 
   const createUser = async (email, password) => {
     try {
       setLoading(true);
-      await axios.post("https://localhost:999/authentication/signup", {
+      await axios.post("https://localhost:999/authentication/login", {
         email: email,
         password: password,
       });
-      router.push("/login");
+      router.push("/signup");
     } catch (err) {
       setApiError(err.response.data);
     } finally {
@@ -54,43 +45,35 @@ const SignUp = () => {
   function reduceStep() {
     setStep((prev) => prev - 1);
   }
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
-      confirmPassword: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const { email, password } = values;
-      await createUser(email, password);
+      await logUser(email, password);
     },
   });
-
-  // const next = () => setStep((s) => s + 1);
-  // const back = () => setStep((s) => s - 1);
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    router.push(href);
-  };
-
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   router.push(href);
+  // };
   return (
-    <div>
-      {step === 1 && <StepOne increaseStep={increaseStep} formik={formik} />}
+    <>
+      {step === 1 && <LoginPage1 increaseStep={increaseStep} formik={formik} />}
       {step === 2 && (
-        <Step2
+        <resetPassword
           increaseStep={increaseStep}
           reduceStep={reduceStep}
           formik={formik}
         />
       )}
       {apiError && <div style={{ color: "red" }}>{apiError}</div>}
-      <div className=" flex w-screen h-screen relative">
-        <Image src="/delivery.png" alt="aa" fill className="max-w-[50%]" />{" "}
-      </div>
-    </div>
+    </>
   );
 };
 
-export default SignUp;
+export default LoginOfficialPage;
