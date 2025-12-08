@@ -3,7 +3,6 @@ import { useState } from "react";
 import SignUp from "../app/sign-up/page";
 import { useRouter } from "next/navigation";
 import StepOne from "../app/sign-up/stepOne";
-import Step2 from "../app/sign-up/step2";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";

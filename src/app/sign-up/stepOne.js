@@ -6,10 +6,13 @@ import { ChevronLeft } from "@/app/_icons/ChevronLeft";
 // import { MailIcon } from "../_icons/MailIcon";
 import { Button } from "@/components/ui/button";
 import LoginPage from "../login/page";
+import { useRouter } from "next/navigation";
 
 export default function StepOne({ increaseStep, formik }) {
   const { values, handleChange, handleBlur, errors, touched, handleSubmit } =
     formik;
+
+  const router = useRouter();
 
   const createUser = async (email, password) => {
     try {
@@ -25,13 +28,11 @@ export default function StepOne({ increaseStep, formik }) {
     }
   };
 
-  function validEmail(email) {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  }
+  const handleNavigate = () => {
+    router.push("/login");
+  };
 
-  var img = document.createElement("img");
-  img.src = "mailIcon.png";
-  document.body.appendChild(img);
+  console.log("errors", errors);
 
   return (
     <div className="flex h-full overflow-hidden flex-col">
@@ -67,7 +68,7 @@ export default function StepOne({ increaseStep, formik }) {
               name="email"
               placeholder="Enter your email"
               className={`pl-10 w-[416px] ${
-                !validEmail && touched
+                errors.email && touched
                   ? "border-red-300 focus-visible:ring-red-300"
                   : ""
               }`}
@@ -87,7 +88,7 @@ export default function StepOne({ increaseStep, formik }) {
 
           <Button
             onClick={increaseStep}
-            disable={errors.email || !values.email}
+            disabled={errors.email || !values.email}
             className={`w-[416px] h-9 mb-6 cursor-pointer
             ${
               validEmail
@@ -100,7 +101,7 @@ export default function StepOne({ increaseStep, formik }) {
         </div>
         <div className="flex w-[400px] gap-3 text-4 justify-center items-center flex-row">
           <p className="text-[#71717A]">Already have an account?</p>
-          <span className="text-[#2563EB]" onClick={<LoginPage />}>
+          <span className="text-[#2563EB]" onClick={handleNavigate}>
             Log in
           </span>
         </div>

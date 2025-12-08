@@ -8,9 +8,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
-export default function LoginPage1() {
+export default function LoginPage1(reduceStep) {
   const [step, setStep] = useState(1);
-  const router = useRouter();
   const [apiError, setApiError] = useState("");
   const [loading, setLoading] = useState(false);
   const validationSchema = Yup.object().shape({
@@ -20,7 +19,9 @@ export default function LoginPage1() {
     password: Yup.string().min(6, "min 6").required("Required"),
   });
 
-  const createUser = async (email, password) => {
+  const router = useRouter();
+
+  const saveUser = async (email, password) => {
     try {
       setLoading(true);
       await axios.post("https://localhost:999/authentication/login", {
@@ -42,6 +43,14 @@ export default function LoginPage1() {
     setStep((prev) => prev - 1);
   }
 
+  const handleClick = () => {
+    router.push("/sign-up");
+  };
+
+  const handlePassword = () => {
+    router.push("/resetPassword");
+  };
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -50,20 +59,15 @@ export default function LoginPage1() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const { email, password } = values;
-      await logUser(email, password);
+      await saveUser(email, password);
     },
   });
-
-  const handleClick = () => {
-    router.push("/sign-up");
-  };
-
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-[1440px] h-[944px] p-5 flex gap-12 pl-20 items-center">
         <div className="w-100 h-93 flex flex-col gap-6">
           <div className="w-9 h-9 flex justify-center items-center rounded-[10px] border border-[#E4E4E7]">
-            <ChevronLeft />
+            <ChevronLeft className="cursor-pointer" onClick={reduceStep} />
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="font-semibold text-2xl">Log in </h3>
@@ -75,14 +79,17 @@ export default function LoginPage1() {
             <Input type="email" placeholder="Enter your email address" />
             <Input type="password" placeholder="Password" />
             <div className="flex items-center gap-2">
-              <p className="text-[14px] text-[#71717A]">Forgot password ?</p>
+              <p
+                onClick={handlePassword}
+                // onClick={<resetPassword />}
+                className="text-[14px] text-[#71717A] underline cursor-pointer"
+              >
+                Forgot password ?{" "}
+              </p>
             </div>
           </div>
-          <div className="w-104 h-9 bg-[#18181B]  rounded-[6px] flex justify-center items-center">
-            <p
-              className="text-[#FAFAFA] text-[14px] font-medium"
-              onClick={<resetPassword />}
-            >
+          <div className="w-104 h-9 bg-[#18181B]  rounded-md flex justify-center items-center">
+            <p className="text-[#FAFAFA] text-[14px] font-medium ">
               Let&apos;s Go
             </p>
           </div>

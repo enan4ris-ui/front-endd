@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
-export default function Step2({ next, back, formik }) {
+export default function Step2({ next, back, formik, reduceStep }) {
   const {
     values,
     handleChange,
@@ -19,28 +19,7 @@ export default function Step2({ next, back, formik }) {
   } = formik;
 
   const [show, setShow] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [confirmPassword, setconfirmPassword] = useState("");
-  const hasLetters = /[a-zA-Z]/.test(password);
-  const hasNumbers = /[0-9]/.test(password);
-  const hasSpecial = /[^a-zA-Z0-9]/.test(password);
-
   const router = useRouter();
-
-  let strength = "weak";
-  if (password.length >= 8 && hasLetters && hasNumbers && hasSpecial) {
-    strength = "strong";
-  } else if (password.length >= 6 && hasLetters && hasNumbers) {
-    strength = "medium";
-  }
-
-  const isValid = password.length >= 6 && password === confirm && hasSpecial;
-
-  const error = touched && !isValid;
-
-  console.log("values", values);
-  let img = document.createElement("img");
 
   return (
     <div className="flex h-screen w-screen justify-center align-center overflow-hidden">
@@ -48,9 +27,9 @@ export default function Step2({ next, back, formik }) {
         <div className="w-100 h-93 flex flex-col gap-1">
           <div
             className="w-9 h-9 flex justify-center items-center rounded-[10px] border border-[#E4E4E7]"
-            onClick={() => router.back()}
+            onClick={reduceStep}
           >
-            <ChevronLeft className="cursor-pointer" onClick={reduceStep} />
+            <ChevronLeft className="cursor-pointer" />
           </div>
 
           <h1 className="font-semibold text-2xl mb-2">
@@ -85,7 +64,9 @@ export default function Step2({ next, back, formik }) {
             placeholder="Confirm"
             name="confirmPassword"
             className={`${
-              error ? "border-red-300 focus-visible: ring-red-300" : ""
+              errors.confirmPassword
+                ? "border-red-300 focus-visible: ring-red-300"
+                : ""
             }`}
             value={values.confirmPassword}
             onChange={handleChange}
@@ -100,23 +81,23 @@ export default function Step2({ next, back, formik }) {
             )}
           </div>
 
-          <div className="flex items-center gap-2">
-            <Checkbox id="terms-2" defaultChecked />
+          <div
+            className="flex items-center gap-2"
+            onClick={() => setShow((prev) => !prev)}
+          >
+            <Checkbox checked={show} id="terms-2" />
             <p className="text-[14px] text-[#71717A]">Show password</p>
           </div>
         </div>
+
         <Button
-          disable={isSubmitting}
-          onClick={handleSubmit}
-          className={`w-[416px] h-9 mb-6 cursor-pointer
-            ${
-              confirmPassword
-                ? "bg-[#18181B] text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
+          disabled={isSubmitting || errors.password || errors.confirmPassword}
+          onClick={() => handleSubmit(values)}
+          className={`w-[416px] h-9 mb-6 cursor-pointer bg-black text-white`}
         >
           {isSubmitting ? "loading" : "Lets Go"}
         </Button>
+
         <div className="flex flex-row gap-3 text-4 justify-center items-center">
           <p className="text-[#71717A]">Already have an account?</p>
           <button disable="true" className="text-[#2563EB]">

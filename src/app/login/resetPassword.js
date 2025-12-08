@@ -10,11 +10,26 @@ import { useRouter } from "next/navigation";
 export default function resetPassword() {
   //   const router = useRouter();
   const handleButtonClick = () => {
-    router.push("/signup");
+    router.push("/sig-nup");
   };
 
+  // const router = useRouter();
+
+  const resetPassword = async (email) => {
+    try {
+      await axios.post("https://localhost:999/authentication/resetPassword", {
+        email: email,
+        // password: password,
+      });
+      router.push("/sign-up");
+    } catch (err) {
+      setApiError(err.response.data);
+    } finally {
+      console.log("finished");
+    }
+  };
   return (
-    <div className="flex h-full overflow-hidden flex-col">
+    <div className="flex h-full flex-col">
       <div className="flex h-screen justify-center flex-col w-1/2">
         <div
           className="w-full max-w-[416px]"
@@ -42,11 +57,6 @@ export default function resetPassword() {
           </div>
 
           <div className="relative mb-2 flex flex-col">
-            {/* <MailIcon
-              className={`absolute hidden left-3 top-1/2 -translate-y-1/2 h-4 w-4
-              ${!validEmail && touched ? "text-red-300" : "text-[#71717A]"}`}
-            /> */}
-
             <Input
               type="email"
               name="email"

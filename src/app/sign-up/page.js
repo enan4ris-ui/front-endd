@@ -36,7 +36,7 @@ const SignUp = () => {
   const createUser = async (email, password) => {
     try {
       setLoading(true);
-      await axios.post("https://localhost:999/authentication/signup", {
+      await axios.post("http://localhost:999/authentication/sign-up", {
         email: email,
         password: password,
       });
@@ -51,6 +51,7 @@ const SignUp = () => {
   function increaseStep() {
     setStep((prev) => prev + 1);
   }
+
   function reduceStep() {
     setStep((prev) => prev - 1);
   }
@@ -63,17 +64,10 @@ const SignUp = () => {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       const { email, password } = values;
+
       await createUser(email, password);
     },
   });
-
-  // const next = () => setStep((s) => s + 1);
-  // const back = () => setStep((s) => s - 1);
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    router.push(href);
-  };
 
   return (
     <div>
