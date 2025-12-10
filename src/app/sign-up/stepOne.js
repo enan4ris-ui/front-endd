@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft } from "@/app/_icons/ChevronLeft";
+import { ChevronLeft } from "@/app/icons/ChevronLeft";
 // import { MailIcon } from "../_icons/MailIcon";
 import { Button } from "@/components/ui/button";
 import LoginPage from "../login/page";

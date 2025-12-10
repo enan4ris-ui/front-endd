@@ -1,9 +1,9 @@
-import { createContext, useContext, useState, useEffect } from "react";
+"use client";
 
 const FoodCategoryContext = (createContext = null);
 
 export const useFoodCategory = () => {
-  const context = useContext(ProductContext);
+  const context = useContext(FoodCategoryContext);
   if (!context) {
     throw new Error(
       "useFoodCategory must be used inside a <FoodCategoryProvider>"
@@ -28,7 +28,7 @@ export const FoodCategoryProvider = ({ children }) => {
       });
       setCategories(response.data);
     } catch (error) {
-      console.error("Failede to fetch categories", error);
+      console.error("Failed to fetch categories", error);
       toast.error("Failed to fetch categories");
     } finally {
       setLoading(false);

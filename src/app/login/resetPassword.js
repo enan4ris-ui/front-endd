@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { ChevronLeft } from "@/app/_icons/ChevronLeft";
+import { ChevronLeft } from "@/app/icons/ChevronLeft";
 import { Button } from "@/components/ui/button";
 import SignUp from "../sign-up/page";
 import { useRouter } from "next/navigation";

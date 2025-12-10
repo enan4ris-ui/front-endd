@@ -24,7 +24,7 @@ export default function LoginPage({ className }) {
     password: Yup.string().required("Required"),
   });
 
-  const formil = useFormik({
+  const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
@@ -40,9 +40,8 @@ export default function LoginPage({ className }) {
             password: values.password,
           }
         );
-        console.log("this is response", response.data.token);
 
-        // localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("authToken", response.data.token);
 
         console.log("Push to homepage success");
         toast.success("Login successful!");

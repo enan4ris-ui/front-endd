@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { ChevronLeft } from "@/app/_icons/ChevronLeft";
+import { ChevronLeft } from "@/app/icons/ChevronLeft";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
