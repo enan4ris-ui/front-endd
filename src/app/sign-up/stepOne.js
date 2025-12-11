@@ -28,6 +28,11 @@ export default function StepOne({ increaseStep, formik }) {
     }
   };
 
+  function validEmail(email) {
+    const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+    return re.test(email);
+  }
+
   const handleNavigate = () => {
     router.push("/login");
   };
@@ -94,7 +99,8 @@ export default function StepOne({ increaseStep, formik }) {
               validEmail
                 ? "bg-[#18181B] text-white"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
+            }
+            `}
           >
             Let&apos;s Go
           </Button>
