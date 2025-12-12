@@ -49,11 +49,14 @@ export default function Adminstrator() {
           </button>
           <button
              className={cn(
-                "w-[165px] h-10 flex gap-2.5 items-center justify-center rounded-full border"
+                "w-[165px] h-10 flex gap-2.5 items-center justify-center rounded-full border",
                 !orders
-             )}
+                 ? "bg-[#09090B text-white"
+                : "bg-white text-[#09090B border-none"
+             )}>
+              
+             </button>
         </div>
-      </div>
-    </div>
+        </div>
   );
 }
