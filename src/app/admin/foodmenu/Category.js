@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import CategoriesMap from "@/app/_components/CategoriesMap";
-import { useFoodCategory } from "@/app/_provider/food-category";
+import { useFoodCategory } from "@/app/_provider/FoodCategory";
 
 export function Categories() {
   const [categories, setCategories] = useState([]);

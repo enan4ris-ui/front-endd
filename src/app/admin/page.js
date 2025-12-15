@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Order } from "./orders/Order";
 import { cn } from "@/lib/utils";
 import { Categories } from "./foodmenu/Category";
-import { useFoodCategory } from "../_provider/food-category";
+import { useFoodCategory } from "../_provider/FoodCategory";
 
 export default function Adminstrator() {
   const [orders, setOrders] = useState(false);
